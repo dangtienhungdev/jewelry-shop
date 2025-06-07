@@ -38,7 +38,7 @@ export default registerAs('app', () => ({
       process.env.SWAGGER_DESCRIPTION ||
       'API documentation for Jewelry Shop e-commerce platform',
     version: process.env.SWAGGER_VERSION || '1.0.0',
-    tag: process.env.SWAGGER_TAG || 'jewelry-shop',
+    // tag: process.env.SWAGGER_TAG || 'jewelry-shop',
   },
 
   // Email Configuration

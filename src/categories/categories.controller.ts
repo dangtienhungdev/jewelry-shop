@@ -180,13 +180,20 @@ export class CategoriesController {
     @Query('parentId') parentId?: string,
     @Query('search') search?: string,
   ) {
-    return this.categoriesService.findAll({
+    const result = await this.categoriesService.findAll({
       page,
       limit,
       isActive,
       parentId,
       search,
     });
+
+    return {
+      success: true,
+      message: 'Lấy danh sách danh mục thành công',
+      data: result,
+      timestamp: new Date().toISOString(),
+    };
   }
 
   @Get('tree')

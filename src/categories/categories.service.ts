@@ -69,13 +69,13 @@ export class CategoriesService {
       search?: string;
     } = {},
   ): Promise<{
-    categories: CategoryResponseDto[];
-    pagination: {
-      current: number;
-      total: number;
-      pages: number;
-      limit: number;
-    };
+    items: CategoryResponseDto[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
   }> {
     const { page = 1, limit = 10, isActive, parentId, search } = options;
     const skip = (page - 1) * limit;
@@ -103,14 +103,16 @@ export class CategoriesService {
       this.categoryModel.countDocuments(filter),
     ]);
 
+    const totalPages = Math.ceil(total / limit);
+
     return {
-      categories: categories.map((category) => this.mapToResponseDto(category)),
-      pagination: {
-        current: page,
-        total,
-        pages: Math.ceil(total / limit),
-        limit,
-      },
+      items: categories.map((category) => this.mapToResponseDto(category)),
+      total,
+      page,
+      limit,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
     };
   }
 
