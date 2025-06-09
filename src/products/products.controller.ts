@@ -112,23 +112,41 @@ export class ProductsController {
   @ApiResponse({
     status: 200,
     description: 'Lấy danh sách sản phẩm thành công',
-    schema: {
-      type: 'object',
-      properties: {
-        products: {
-          type: 'array',
-          items: { $ref: '#/components/schemas/ProductResponseDto' },
-        },
-        pagination: {
-          type: 'object',
-          properties: {
-            current: { type: 'number' },
-            total: { type: 'number' },
-            pages: { type: 'number' },
-            limit: { type: 'number' },
+    example: {
+      success: true,
+      message: 'Lấy danh sách sản phẩm thành công',
+      data: {
+        items: [
+          {
+            _id: '60d5f484e1a2f5001f647abc',
+            productName: 'Nhẫn Kim cương solitaire',
+            description: 'Nhẫn kim cương solitaire cao cấp',
+            price: 50000000,
+            discountedPrice: 45000000,
+            stockQuantity: 10,
+            material: 'Vàng 18K',
+            weight: 3.5,
+            dimensions: '6mm',
+            images: ['image1.jpg', 'image2.jpg'],
+            isFeatured: true,
+            views: 150,
+            categoryId: {
+              _id: '60d5f484e1a2f5001f647def',
+              categoryName: 'Nhẫn',
+              description: 'Các loại nhẫn trang sức',
+            },
+            createdAt: '2024-01-01T00:00:00.000Z',
+            updatedAt: '2024-01-01T00:00:00.000Z',
           },
-        },
+        ],
+        total: 50,
+        page: 1,
+        limit: 10,
+        totalPages: 5,
+        hasNextPage: true,
+        hasPrevPage: false,
       },
+      timestamp: '2024-01-01T00:00:00.000Z',
     },
   })
   async findAll(
@@ -143,7 +161,7 @@ export class ProductsController {
     @Query('sortBy') sortBy?: 'price' | 'createdAt' | 'views' | 'productName',
     @Query('sortOrder') sortOrder?: 'asc' | 'desc',
   ) {
-    return this.productsService.findAll({
+    const result = await this.productsService.findAll({
       page,
       limit,
       categoryId,
@@ -155,6 +173,13 @@ export class ProductsController {
       sortBy,
       sortOrder,
     });
+
+    return {
+      success: true,
+      message: 'Lấy danh sách sản phẩm thành công',
+      data: result,
+      timestamp: new Date().toISOString(),
+    };
   }
 
   @Get('featured')
@@ -168,12 +193,52 @@ export class ProductsController {
   @ApiResponse({
     status: 200,
     description: 'Lấy sản phẩm nổi bật thành công',
-    type: [ProductResponseDto],
+    example: {
+      success: true,
+      message: 'Lấy danh sách sản phẩm nổi bật thành công',
+      data: {
+        items: [
+          {
+            _id: '60d5f484e1a2f5001f647abc',
+            productName: 'Nhẫn Kim cương solitaire nổi bật',
+            description: 'Nhẫn kim cương solitaire cao cấp',
+            price: 50000000,
+            discountedPrice: 45000000,
+            stockQuantity: 10,
+            material: 'Vàng 18K',
+            weight: 3.5,
+            dimensions: '6mm',
+            images: ['image1.jpg', 'image2.jpg'],
+            isFeatured: true,
+            views: 150,
+            categoryId: {
+              _id: '60d5f484e1a2f5001f647def',
+              categoryName: 'Nhẫn',
+              description: 'Các loại nhẫn trang sức',
+            },
+            createdAt: '2024-01-01T00:00:00.000Z',
+            updatedAt: '2024-01-01T00:00:00.000Z',
+          },
+        ],
+        total: 15,
+        limit: 10,
+      },
+      timestamp: '2024-01-01T00:00:00.000Z',
+    },
   })
-  async getFeaturedProducts(
-    @Query('limit') limit?: number,
-  ): Promise<ProductResponseDto[]> {
-    return this.productsService.getFeaturedProducts(limit);
+  async getFeaturedProducts(@Query('limit') limit?: number) {
+    const products = await this.productsService.getFeaturedProducts(limit);
+
+    return {
+      success: true,
+      message: 'Lấy danh sách sản phẩm nổi bật thành công',
+      data: {
+        items: products,
+        total: products.length,
+        limit: limit || 10,
+      },
+      timestamp: new Date().toISOString(),
+    };
   }
 
   @Get('latest')
@@ -187,12 +252,52 @@ export class ProductsController {
   @ApiResponse({
     status: 200,
     description: 'Lấy sản phẩm mới nhất thành công',
-    type: [ProductResponseDto],
+    example: {
+      success: true,
+      message: 'Lấy danh sách sản phẩm mới nhất thành công',
+      data: {
+        items: [
+          {
+            _id: '60d5f484e1a2f5001f647abc',
+            productName: 'Nhẫn Kim cương mới nhất',
+            description: 'Nhẫn kim cương thiết kế mới',
+            price: 40000000,
+            discountedPrice: null,
+            stockQuantity: 15,
+            material: 'Vàng 18K',
+            weight: 3.2,
+            dimensions: '6mm',
+            images: ['latest1.jpg', 'latest2.jpg'],
+            isFeatured: false,
+            views: 50,
+            categoryId: {
+              _id: '60d5f484e1a2f5001f647def',
+              categoryName: 'Nhẫn',
+              description: 'Các loại nhẫn trang sức',
+            },
+            createdAt: '2024-01-01T00:00:00.000Z',
+            updatedAt: '2024-01-01T00:00:00.000Z',
+          },
+        ],
+        total: 12,
+        limit: 10,
+      },
+      timestamp: '2024-01-01T00:00:00.000Z',
+    },
   })
-  async getLatestProducts(
-    @Query('limit') limit?: number,
-  ): Promise<ProductResponseDto[]> {
-    return this.productsService.getLatestProducts(limit);
+  async getLatestProducts(@Query('limit') limit?: number) {
+    const products = await this.productsService.getLatestProducts(limit);
+
+    return {
+      success: true,
+      message: 'Lấy danh sách sản phẩm mới nhất thành công',
+      data: {
+        items: products,
+        total: products.length,
+        limit: limit || 10,
+      },
+      timestamp: new Date().toISOString(),
+    };
   }
 
   @Get('stats')
@@ -262,23 +367,41 @@ export class ProductsController {
   @ApiResponse({
     status: 200,
     description: 'Tìm kiếm thành công',
-    schema: {
-      type: 'object',
-      properties: {
-        products: {
-          type: 'array',
-          items: { $ref: '#/components/schemas/ProductResponseDto' },
-        },
-        pagination: {
-          type: 'object',
-          properties: {
-            current: { type: 'number' },
-            total: { type: 'number' },
-            pages: { type: 'number' },
-            limit: { type: 'number' },
+    example: {
+      success: true,
+      message: 'Tìm kiếm sản phẩm thành công',
+      data: {
+        items: [
+          {
+            _id: '60d5f484e1a2f5001f647abc',
+            productName: 'Nhẫn Kim cương solitaire',
+            description: 'Nhẫn kim cương solitaire cao cấp',
+            price: 50000000,
+            discountedPrice: 45000000,
+            stockQuantity: 10,
+            material: 'Vàng 18K',
+            weight: 3.5,
+            dimensions: '6mm',
+            images: ['image1.jpg', 'image2.jpg'],
+            isFeatured: true,
+            views: 150,
+            categoryId: {
+              _id: '60d5f484e1a2f5001f647def',
+              categoryName: 'Nhẫn',
+              description: 'Các loại nhẫn trang sức',
+            },
+            createdAt: '2024-01-01T00:00:00.000Z',
+            updatedAt: '2024-01-01T00:00:00.000Z',
           },
-        },
+        ],
+        total: 25,
+        page: 1,
+        limit: 10,
+        totalPages: 3,
+        hasNextPage: true,
+        hasPrevPage: false,
       },
+      timestamp: '2024-01-01T00:00:00.000Z',
     },
   })
   async searchProducts(
@@ -288,12 +411,19 @@ export class ProductsController {
     @Query('sortBy') sortBy?: 'price' | 'createdAt' | 'views',
     @Query('sortOrder') sortOrder?: 'asc' | 'desc',
   ) {
-    return this.productsService.searchProducts(query, {
+    const result = await this.productsService.searchProducts(query, {
       page,
       limit,
       sortBy,
       sortOrder,
     });
+
+    return {
+      success: true,
+      message: 'Tìm kiếm sản phẩm thành công',
+      data: result,
+      timestamp: new Date().toISOString(),
+    };
   }
 
   @Get('category/:categoryId')
@@ -308,14 +438,59 @@ export class ProductsController {
   @ApiResponse({
     status: 200,
     description: 'Lấy sản phẩm theo danh mục thành công',
-    type: [ProductResponseDto],
+    example: {
+      success: true,
+      message: 'Lấy sản phẩm theo danh mục thành công',
+      data: {
+        items: [
+          {
+            _id: '60d5f484e1a2f5001f647abc',
+            productName: 'Nhẫn Kim cương trong danh mục',
+            description: 'Nhẫn kim cương thuộc danh mục cụ thể',
+            price: 35000000,
+            discountedPrice: null,
+            stockQuantity: 8,
+            material: 'Vàng 18K',
+            weight: 3.0,
+            dimensions: '6mm',
+            images: ['category1.jpg', 'category2.jpg'],
+            isFeatured: false,
+            views: 75,
+            categoryId: {
+              _id: '60d5f484e1a2f5001f647def',
+              categoryName: 'Nhẫn',
+              description: 'Các loại nhẫn trang sức',
+            },
+            createdAt: '2024-01-01T00:00:00.000Z',
+            updatedAt: '2024-01-01T00:00:00.000Z',
+          },
+        ],
+        total: 8,
+        limit: 10,
+      },
+      timestamp: '2024-01-01T00:00:00.000Z',
+    },
   })
   @ApiResponse({ status: 400, description: 'ID danh mục không hợp lệ' })
   async getProductsByCategory(
     @Param('categoryId') categoryId: string,
     @Query('limit') limit?: number,
-  ): Promise<ProductResponseDto[]> {
-    return this.productsService.getProductsByCategory(categoryId, limit);
+  ) {
+    const products = await this.productsService.getProductsByCategory(
+      categoryId,
+      limit,
+    );
+
+    return {
+      success: true,
+      message: 'Lấy sản phẩm theo danh mục thành công',
+      data: {
+        items: products,
+        total: products.length,
+        limit: limit || 10,
+      },
+      timestamp: new Date().toISOString(),
+    };
   }
 
   @Get(':id')

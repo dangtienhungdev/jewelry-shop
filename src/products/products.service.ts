@@ -69,13 +69,13 @@ export class ProductsService {
       sortOrder?: 'asc' | 'desc';
     } = {},
   ): Promise<{
-    products: ProductResponseDto[];
-    pagination: {
-      current: number;
-      total: number;
-      pages: number;
-      limit: number;
-    };
+    items: ProductResponseDto[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
   }> {
     const {
       page = 1,
@@ -90,22 +90,27 @@ export class ProductsService {
       sortOrder = 'desc',
     } = options;
 
-    // Xây dựng query filter
-    const filter: any = { stockQuantity: { $gt: 0 } };
+    const filter: any = {};
 
+    // Lọc theo danh mục
     if (categoryId) {
+      if (!Types.ObjectId.isValid(categoryId)) {
+        throw new BadRequestException('ID danh mục không hợp lệ');
+      }
       filter.categoryId = new Types.ObjectId(categoryId);
     }
 
+    // Lọc theo sản phẩm nổi bật
     if (isFeatured !== undefined) {
       filter.isFeatured = isFeatured;
     }
 
+    // Lọc theo chất liệu
     if (material) {
-      filter.material = material;
+      filter.material = { $regex: material, $options: 'i' };
     }
 
-    // Lọc theo giá (ưu tiên discountedPrice nếu có)
+    // Lọc theo giá
     if (minPrice !== undefined || maxPrice !== undefined) {
       if (minPrice !== undefined && maxPrice !== undefined) {
         filter.$or = [
@@ -165,14 +170,16 @@ export class ProductsService {
       this.productModel.countDocuments(filter),
     ]);
 
+    const totalPages = Math.ceil(total / limit);
+
     return {
-      products: products.map((product) => this.mapToResponseDto(product)),
-      pagination: {
-        current: page,
-        total,
-        pages: Math.ceil(total / limit),
-        limit,
-      },
+      items: products.map((product) => this.mapToResponseDto(product)),
+      total,
+      page,
+      limit,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
     };
   }
 
@@ -316,13 +323,13 @@ export class ProductsService {
       sortOrder?: 'asc' | 'desc';
     } = {},
   ): Promise<{
-    products: ProductResponseDto[];
-    pagination: {
-      current: number;
-      total: number;
-      pages: number;
-      limit: number;
-    };
+    items: ProductResponseDto[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
   }> {
     const {
       page = 1,
@@ -352,14 +359,16 @@ export class ProductsService {
       this.productModel.countDocuments(filter),
     ]);
 
+    const totalPages = Math.ceil(total / limit);
+
     return {
-      products: products.map((product) => this.mapToResponseDto(product)),
-      pagination: {
-        current: page,
-        total,
-        pages: Math.ceil(total / limit),
-        limit,
-      },
+      items: products.map((product) => this.mapToResponseDto(product)),
+      total,
+      page,
+      limit,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
     };
   }
 
