@@ -1,73 +1,37 @@
 version: '3.8'
 
 services:
-  # MongoDB Database
-  mongodb:
-    image: mongo:7.0
-    container_name: jewelry-mongodb
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: adminpassword
-      MONGO_INITDB_DATABASE: jewelry-shop
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    networks:
-      - jewelry-network
-
-  # Backend API
   backend:
-    build: .
-    container_name: jewelry-backend
-    restart: always
-    environment:
-      # Database Configuration
-      MONGODB_URI: mongodb://admin:adminpassword@mongodb:27017/jewelry-shop?authSource=admin
-      DB_NAME: jewelry-shop
-
-      # Application Config
-      PORT: 8000
-      NODE_ENV: production
-      API_PREFIX: api/v1
-
-      # JWT Configuration
-      JWT_SECRET: jewelry-shop-super-secret-jwt-key-2024
-      JWT_EXPIRES_IN: 24h
-      REFRESH_TOKEN_SECRET: jewelry-shop-refresh-token-secret-2024
-      REFRESH_TOKEN_EXPIRES_IN: 7d
-
-      # Security
-      BCRYPT_ROUNDS: 12
-      SESSION_SECRET: jewelry-shop-session-secret-2024
-
-      # CORS Configuration
-      CORS_ORIGIN: "*"
-
-      # Upload Configuration
-      MAX_FILE_SIZE: 5242880
-      UPLOAD_PATH: uploads
-
-      # Swagger Configuration
-      SWAGGER_TITLE: Jewelry Shop API
-      SWAGGER_DESCRIPTION: API documentation for Jewelry Shop
-      SWAGGER_VERSION: 1.0.0
-      SWAGGER_TAG: jewelry-shop
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jewelry-shop-backend
+    restart: unless-stopped
     ports:
-      - "8000:8000"
-    volumes:
-      - ./uploads:/app/uploads
+      - '8000:8000'
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongodb:27017/jewelry-shop
+      - PORT=8000
     depends_on:
       - mongodb
     networks:
-      - jewelry-network
+      - jewelry-shop-network
 
-volumes:
-  mongodb_data:
-    driver: local
+  mongodb:
+    image: mongo:latest
+    container_name: jewelry-shop-mongodb
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - jewelry-shop-network
 
 networks:
-  jewelry-network:
+  jewelry-shop-network:
     driver: bridge
+
+volumes:
+  mongodb-data:

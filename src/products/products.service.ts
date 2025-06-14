@@ -97,7 +97,7 @@ export class ProductsService {
       if (!Types.ObjectId.isValid(categoryId)) {
         throw new BadRequestException('ID danh mục không hợp lệ');
       }
-      filter.categoryId = new Types.ObjectId(categoryId);
+      filter.categoryId = categoryId;
     }
 
     // Lọc theo sản phẩm nổi bật
@@ -300,7 +300,7 @@ export class ProductsService {
 
     const products = await this.productModel
       .find({
-        categoryId: new Types.ObjectId(categoryId),
+        categoryId: categoryId,
         stockQuantity: { $gt: 0 },
       })
       .populate('categoryId', 'categoryName description')
