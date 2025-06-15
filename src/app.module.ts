@@ -14,6 +14,7 @@ import { AdminsModule } from './admins/admins.module';
 import { CategoriesModule } from './categories/categories.module';
 import { CustomersModule } from './customers/customers.module';
 import { ProductsModule } from './products/products.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -55,6 +56,8 @@ import { ProductsModule } from './products/products.module';
     CategoriesModule,
 
     ProductsModule,
+
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
