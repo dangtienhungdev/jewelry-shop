@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MailService } from '../common/services/mail.service';
 
 import { CustomersController } from './customers.controller';
 import { CustomersService } from './customers.service';
@@ -24,7 +25,7 @@ import { Customer, CustomerSchema } from './schemas/customer.schema';
     }),
   ],
   controllers: [CustomersController],
-  providers: [CustomersService],
+  providers: [CustomersService, MailService],
   exports: [CustomersService],
 })
 export class CustomersModule {}

@@ -96,12 +96,15 @@ export class CartService {
     // Tìm hoặc tạo giỏ hàng
     let cart = await this.cartModel.findOne({ customerId: customerId });
     if (!cart) {
+      // Tạo giỏ hàng mới nếu chưa có
       cart = new this.cartModel({
-        customerId: new Types.ObjectId(customerId),
+        customerId: customerId, // Sử dụng string để nhất quán
         items: [],
         totalAmount: 0,
         totalItems: 0,
       });
+
+      console.log(`🛒 Tạo giỏ hàng mới cho khách hàng: ${customerId}`);
     }
 
     // Kiểm tra sản phẩm đã có trong giỏ chưa

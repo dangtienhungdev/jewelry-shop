@@ -31,7 +31,9 @@ import {
   CustomerResponseDto,
   LoginResponseDto,
 } from './dto/customer-response.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { LoginCustomerDto } from './dto/login-customer.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @ApiTags('👥 Customers - Quản lý khách hàng')
@@ -498,6 +500,128 @@ export class CustomersController {
     return {
       success: true,
       message: 'Làm mới token thành công',
+      data: result,
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Quên mật khẩu - Gửi email đặt lại',
+    description: 'Gửi email chứa link đặt lại mật khẩu đến email khách hàng',
+  })
+  @ApiBody({
+    type: ForgotPasswordDto,
+    description: 'Email để gửi link đặt lại mật khẩu',
+    examples: {
+      forgotPassword: {
+        summary: 'Yêu cầu đặt lại mật khẩu',
+        value: {
+          email: 'customer@example.com',
+        },
+      },
+    },
+  })
+  @ApiOkResponse({
+    description: 'Email đã được gửi thành công',
+    example: {
+      success: true,
+      message: 'Link đặt lại mật khẩu đã được gửi tới email của bạn',
+      timestamp: '2024-01-01T00:00:00.000Z',
+    },
+  })
+  @ApiBadRequestResponse({
+    description: 'Email không hợp lệ hoặc lỗi gửi email',
+    example: {
+      success: false,
+      message: 'Không thể gửi email. Vui lòng thử lại sau',
+      timestamp: '2024-01-01T00:00:00.000Z',
+    },
+  })
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    const result =
+      await this.customersService.forgotPassword(forgotPasswordDto);
+    return {
+      success: true,
+      message: result.message,
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Đặt lại mật khẩu',
+    description: 'Đặt lại mật khẩu mới bằng token từ email',
+  })
+  @ApiBody({
+    type: ResetPasswordDto,
+    description: 'Thông tin đặt lại mật khẩu',
+    examples: {
+      resetPassword: {
+        summary: 'Đặt lại mật khẩu',
+        value: {
+          token: 'abc123def456ghi789...',
+          newPassword: 'NewPassword123!',
+          confirmPassword: 'NewPassword123!',
+        },
+      },
+    },
+  })
+  @ApiOkResponse({
+    description: 'Đặt lại mật khẩu thành công',
+    example: {
+      success: true,
+      message: 'Đặt lại mật khẩu thành công. Bạn có thể đăng nhập ngay bây giờ',
+      timestamp: '2024-01-01T00:00:00.000Z',
+    },
+  })
+  @ApiBadRequestResponse({
+    description: 'Token không hợp lệ hoặc mật khẩu không khớp',
+    example: {
+      success: false,
+      message:
+        'Token không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu đặt lại mật khẩu mới',
+      timestamp: '2024-01-01T00:00:00.000Z',
+    },
+  })
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    const result = await this.customersService.resetPassword(resetPasswordDto);
+    return {
+      success: true,
+      message: result.message,
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  @Get('validate-reset-token/:token')
+  @ApiOperation({
+    summary: 'Kiểm tra token reset password',
+    description:
+      'Kiểm tra xem token reset password có hợp lệ và chưa hết hạn không',
+  })
+  @ApiParam({
+    name: 'token',
+    type: String,
+    description: 'Token reset password cần kiểm tra',
+    example: 'abc123def456ghi789...',
+  })
+  @ApiOkResponse({
+    description: 'Thông tin trạng thái token',
+    example: {
+      success: true,
+      data: {
+        valid: true,
+        message: 'Token hợp lệ',
+      },
+      timestamp: '2024-01-01T00:00:00.000Z',
+    },
+  })
+  async validateResetToken(@Param('token') token: string) {
+    const result = await this.customersService.validateResetToken(token);
+    return {
+      success: true,
       data: result,
       timestamp: new Date().toISOString(),
     };

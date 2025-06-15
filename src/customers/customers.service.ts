@@ -9,7 +9,9 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 import { Model } from 'mongoose';
+import { MailService } from '../common/services/mail.service';
 
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -18,7 +20,9 @@ import {
   LoginResponseDto,
   PaginationResponseDto,
 } from './dto/customer-response.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { LoginCustomerDto } from './dto/login-customer.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer, CustomerDocument } from './entities/customer.entity';
 
@@ -28,6 +32,7 @@ export class CustomersService {
     @InjectModel(Customer.name) private customerModel: Model<CustomerDocument>,
     private configService: ConfigService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async register(
@@ -273,6 +278,137 @@ export class CustomersService {
       accessToken,
       refreshToken,
       expiresIn: 86400, // 24 hours
+    };
+  }
+
+  /**
+   * Gửi email đặt lại mật khẩu
+   */
+  async forgotPassword(
+    forgotPasswordDto: ForgotPasswordDto,
+  ): Promise<{ message: string }> {
+    const customer = await this.customerModel.findOne({
+      email: forgotPasswordDto.email,
+    });
+
+    if (!customer) {
+      // Không tiết lộ thông tin email có tồn tại hay không
+      return {
+        message: 'Nếu email tồn tại, link đặt lại mật khẩu đã được gửi',
+      };
+    }
+
+    // Tạo reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenExpires = new Date(Date.now() + 30 * 60 * 1000); // 30 phút
+
+    // Lưu token vào database
+    await this.customerModel.findByIdAndUpdate(customer._id, {
+      resetPasswordToken: resetToken,
+      resetPasswordExpires: resetTokenExpires,
+    });
+
+    try {
+      // Gửi email
+      await this.mailService.sendResetPasswordEmail(
+        customer.email,
+        resetToken,
+        customer.fullName,
+      );
+
+      return {
+        message: 'Link đặt lại mật khẩu đã được gửi tới email của bạn',
+      };
+    } catch (error) {
+      // Xóa token nếu gửi email thất bại
+      await this.customerModel.findByIdAndUpdate(customer._id, {
+        resetPasswordToken: null,
+        resetPasswordExpires: null,
+      });
+
+      throw new BadRequestException(
+        'Không thể gửi email. Vui lòng thử lại sau',
+      );
+    }
+  }
+
+  /**
+   * Đặt lại mật khẩu bằng token
+   */
+  async resetPassword(
+    resetPasswordDto: ResetPasswordDto,
+  ): Promise<{ message: string }> {
+    // Kiểm tra mật khẩu mới và xác nhận
+    if (resetPasswordDto.newPassword !== resetPasswordDto.confirmPassword) {
+      throw new BadRequestException(
+        'Mật khẩu mới và xác nhận mật khẩu không khớp',
+      );
+    }
+
+    // Tìm customer với token hợp lệ
+    const customer = await this.customerModel
+      .findOne({
+        resetPasswordToken: resetPasswordDto.token,
+        resetPasswordExpires: { $gt: new Date() }, // Token chưa hết hạn
+      })
+      .select('+password +resetPasswordToken +resetPasswordExpires');
+
+    if (!customer) {
+      throw new BadRequestException(
+        'Token không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu đặt lại mật khẩu mới',
+      );
+    }
+
+    // Hash mật khẩu mới
+    const saltRounds = this.configService.get('app.bcrypt.rounds');
+    const hashedPassword = await bcrypt.hash(
+      resetPasswordDto.newPassword,
+      saltRounds,
+    );
+
+    // Cập nhật mật khẩu và xóa token
+    await this.customerModel.findByIdAndUpdate(customer._id, {
+      password: hashedPassword,
+      resetPasswordToken: null,
+      resetPasswordExpires: null,
+    });
+
+    // Gửi email xác nhận (không throw error nếu thất bại)
+    try {
+      await this.mailService.sendPasswordResetSuccessEmail(
+        customer.email,
+        customer.fullName,
+      );
+    } catch (error) {
+      console.log('Không thể gửi email xác nhận:', error.message);
+    }
+
+    return {
+      message: 'Đặt lại mật khẩu thành công. Bạn có thể đăng nhập ngay bây giờ',
+    };
+  }
+
+  /**
+   * Kiểm tra token reset password có hợp lệ không
+   */
+  async validateResetToken(
+    token: string,
+  ): Promise<{ valid: boolean; message: string }> {
+    const customer = await this.customerModel.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: new Date() },
+    });
+
+    if (!customer) {
+      return {
+        valid: false,
+        message: 'Token không hợp lệ hoặc đã hết hạn',
+      };
+    }
+
+    return {
+      valid: true,
+      message: 'Token hợp lệ',
     };
   }
 

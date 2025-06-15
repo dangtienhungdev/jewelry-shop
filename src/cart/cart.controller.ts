@@ -51,14 +51,22 @@ export class CartController {
   }
 
   @Post('customer/:customerId/items')
-  @ApiOperation({ summary: 'Thêm sản phẩm vào giỏ hàng' })
+  @ApiOperation({
+    summary: 'Thêm sản phẩm vào giỏ hàng',
+    description:
+      'Thêm sản phẩm vào giỏ hàng. Nếu khách hàng chưa có giỏ hàng, hệ thống sẽ tự động tạo giỏ hàng mới.',
+  })
   @ApiParam({ name: 'customerId', description: 'ID khách hàng' })
   @ApiResponse({
     status: 201,
-    description: 'Thêm sản phẩm vào giỏ hàng thành công',
+    description:
+      'Thêm sản phẩm vào giỏ hàng thành công (bao gồm tạo giỏ hàng mới nếu cần)',
     type: CartResponseDto,
   })
-  @ApiResponse({ status: 400, description: 'Dữ liệu không hợp lệ' })
+  @ApiResponse({
+    status: 400,
+    description: 'Dữ liệu không hợp lệ hoặc không đủ tồn kho',
+  })
   @ApiResponse({ status: 404, description: 'Không tìm thấy sản phẩm' })
   async addItem(
     @Param('customerId') customerId: string,

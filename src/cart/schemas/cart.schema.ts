@@ -17,14 +17,14 @@ export class Cart {
 
   @Prop({
     required: true,
-    type: Types.ObjectId,
+    type: String,
     ref: 'Customer',
   })
   @ApiProperty({
     description: 'ID khách hàng sở hữu giỏ hàng',
     example: '60d5f484e1a2f5001f647customer',
   })
-  customerId: Types.ObjectId;
+  customerId: string;
 
   @Prop({
     type: [

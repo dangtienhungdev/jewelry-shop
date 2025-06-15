@@ -78,6 +78,28 @@ export class Customer {
   })
   address?: string;
 
+  @Prop({
+    type: String,
+    default: null,
+  })
+  @ApiProperty({
+    description: 'Token để reset mật khẩu',
+    example: 'abc123def456...',
+    required: false,
+  })
+  resetPasswordToken?: string;
+
+  @Prop({
+    type: Date,
+    default: null,
+  })
+  @ApiProperty({
+    description: 'Thời gian hết hạn token reset mật khẩu',
+    example: '2024-01-01T01:00:00.000Z',
+    required: false,
+  })
+  resetPasswordExpires?: Date;
+
   @ApiProperty({
     description: 'Thời gian tạo tài khoản',
     example: '2024-01-01T00:00:00.000Z',
