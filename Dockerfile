@@ -1,41 +1,34 @@
-# Use an official Node.js runtime as a parent image
-FROM node:20-alpine
+# Stage 1: Build ứng dụng NestJS
+FROM node:20-alpine AS builder
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Install necessary packages for building native dependencies
-RUN apk add --no-cache \
-    libc6-compat \
-    python3 \
-    make \
-    g++ \
-    gcc \
-    musl-dev
-
-# Copy package.json and package-lock.json to the working directory
+# Copy package.json và package-lock.json (hoặc yarn.lock)
 COPY package*.json ./
+COPY yarn.lock ./
 
-# Clean npm cache and install dependencies
-RUN npm cache clean --force && \
-    npm install --force
+# Cài đặt dependencies
+RUN yarn install --frozen-lockfile
 
-# Copy the rest of the application code to the working directory
+# Copy toàn bộ source code
 COPY . .
 
-# Remove node_modules and do a fresh install to ensure native modules are built correctly
-RUN rm -rf node_modules && \
-    npm install --force && \
-    npm rebuild bcrypt --build-from-source
+# Build ứng dụng NestJS (nếu dùng TypeScript)
+RUN yarn build
 
-# Build the NestJS application
-RUN npm run build
+# Stage 2: Chạy ứng dụng
+FROM node:20-alpine
 
-# Clean up build tools to reduce image size but keep libc6-compat for runtime
-RUN apk del python3 make g++ gcc musl-dev
+WORKDIR /app
 
-# Expose the application port
-EXPOSE 8000
+# Copy chỉ những file cần thiết từ builder
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/yarn.lock ./
+COPY --from=builder /app/dist ./dist
 
-# Define the command to run the application
-CMD [ "node", "dist/main.js" ]
+# Mở cổng mà ứng dụng NestJS chạy (ví dụ: 3000)
+EXPOSE 3000
+
+# Lệnh khởi chạy ứng dụng
+CMD ["yarn", "start:prod"]

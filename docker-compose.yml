@@ -3,35 +3,32 @@ version: '3.8'
 services:
   backend:
     build:
-      context: .
+      context: .  # Build từ thư mục chứa Dockerfile
       dockerfile: Dockerfile
-    container_name: jewelry-shop-backend
-    restart: unless-stopped
+    container_name: nestjs_backend
     ports:
-      - '8000:8000'
+      - "3000:3000"  # Map cổng 3000 máy host -> 3000 container
+    volumes:
+      - .:/app       # Mount code để live-reload (dành cho dev)
+      - /app/node_modules  # Giữ nguyên node_modules trong container
     environment:
-      - NODE_ENV=production
-      - MONGO_URI=mongodb://mongodb:27017/jewelry-shop
-      - PORT=8000
+      - NODE_ENV=development
+      - DATABASE_URL=mongodb://mongodb:27017/nestdb  # Kết nối tới MongoDB service
     depends_on:
       - mongodb
-    networks:
-      - jewelry-shop-network
+    restart: unless-stopped
 
   mongodb:
-    image: mongo:latest
-    container_name: jewelry-shop-mongodb
-    restart: unless-stopped
+    image: mongo:6.0  # MongoDB phiên bản mới nhất (hoặc 5.0, 4.4 tùy chọn)
+    container_name: mongodb
     ports:
-      - '27017:27017'
+      - "27017:27017"  # Map cổng MongoDB ra host (tuỳ chọn)
     volumes:
-      - mongodb-data:/data/db
-    networks:
-      - jewelry-shop-network
-
-networks:
-  jewelry-shop-network:
-    driver: bridge
+      - mongodb_data:/data/db  # Lưu trữ dữ liệu MongoDB
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin  # Tuỳ chọn: Tạo user admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    restart: unless-stopped
 
 volumes:
-  mongodb-data:
+  mongodb_data:  # Volume để MongoDB lưu dữ liệu

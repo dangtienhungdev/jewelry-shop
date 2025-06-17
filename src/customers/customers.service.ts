@@ -8,7 +8,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { Model } from 'mongoose';
 import { MailService } from '../common/services/mail.service';
