@@ -148,9 +148,24 @@ export class ProductsService {
       }
     }
 
-    // Tìm kiếm text
-    if (search) {
-      filter.$text = { $search: search };
+    // Tìm kiếm text - chỉ thêm khi search có giá trị hợp lệ
+    if (search && search.trim().length > 0) {
+      const searchTerm = search.trim();
+      const searchFilter = {
+        $or: [
+          { productName: { $regex: searchTerm, $options: 'i' } },
+          { description: { $regex: searchTerm, $options: 'i' } },
+          { material: { $regex: searchTerm, $options: 'i' } },
+        ],
+      };
+
+      // Nếu đã có $or filter từ price range, thì kết hợp với $and
+      if (filter.$or) {
+        filter.$and = [{ $or: filter.$or }, searchFilter];
+        delete filter.$or;
+      } else {
+        Object.assign(filter, searchFilter);
+      }
     }
 
     // Sắp xếp
@@ -338,8 +353,17 @@ export class ProductsService {
       sortOrder = 'desc',
     } = options;
 
-    const filter = {
-      $text: { $search: query },
+    // Kiểm tra query có hợp lệ không
+    if (!query || query.trim().length === 0) {
+      throw new BadRequestException('Từ khóa tìm kiếm không được để trống');
+    }
+
+    const filter: any = {
+      $or: [
+        { productName: { $regex: query.trim(), $options: 'i' } },
+        { description: { $regex: query.trim(), $options: 'i' } },
+        { material: { $regex: query.trim(), $options: 'i' } },
+      ],
       stockQuantity: { $gt: 0 },
     };
 

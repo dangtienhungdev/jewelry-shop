@@ -335,7 +335,7 @@ export class ProductsController {
   @Get('search')
   @ApiOperation({ summary: 'Tìm kiếm sản phẩm' })
   @ApiQuery({
-    name: 'q',
+    name: 'search',
     required: true,
     type: String,
     description: 'Từ khóa tìm kiếm',
@@ -404,13 +404,35 @@ export class ProductsController {
       timestamp: '2024-01-01T00:00:00.000Z',
     },
   })
+  @ApiResponse({
+    status: 400,
+    description: 'Từ khóa tìm kiếm không được để trống',
+  })
   async searchProducts(
-    @Query('q') query: string,
+    @Query('search') query: string,
     @Query('page') page?: number,
     @Query('limit') limit?: number,
     @Query('sortBy') sortBy?: 'price' | 'createdAt' | 'views',
     @Query('sortOrder') sortOrder?: 'asc' | 'desc',
   ) {
+    // Kiểm tra query parameter
+    if (!query || query.trim().length === 0) {
+      return {
+        success: false,
+        message: 'Từ khóa tìm kiếm không được để trống',
+        data: {
+          items: [],
+          total: 0,
+          page: page || 1,
+          limit: limit || 10,
+          totalPages: 0,
+          hasNextPage: false,
+          hasPrevPage: false,
+        },
+        timestamp: new Date().toISOString(),
+      };
+    }
+
     const result = await this.productsService.searchProducts(query, {
       page,
       limit,
