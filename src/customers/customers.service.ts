@@ -8,7 +8,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { Model } from 'mongoose';
 import { MailService } from '../common/services/mail.service';
@@ -55,7 +55,7 @@ export class CustomersService {
     }
 
     // Hash password
-    const saltRounds = this.configService.get('app.bcrypt.rounds');
+    const saltRounds = this.configService.get('app.bcrypt.rounds') || 12;
     const hashedPassword = await bcrypt.hash(
       createCustomerDto.password,
       saltRounds,
@@ -204,7 +204,7 @@ export class CustomersService {
     }
 
     // Hash mật khẩu mới
-    const saltRounds = this.configService.get('app.bcrypt.rounds');
+    const saltRounds = this.configService.get('app.bcrypt.rounds') || 12;
     const hashedNewPassword = await bcrypt.hash(
       changePasswordDto.newPassword,
       saltRounds,
@@ -360,7 +360,7 @@ export class CustomersService {
     }
 
     // Hash mật khẩu mới
-    const saltRounds = this.configService.get('app.bcrypt.rounds');
+    const saltRounds = this.configService.get('app.bcrypt.rounds') || 12;
     const hashedPassword = await bcrypt.hash(
       resetPasswordDto.newPassword,
       saltRounds,
