@@ -15,6 +15,9 @@ import { CategoriesModule } from './categories/categories.module';
 import { CustomersModule } from './customers/customers.module';
 import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
+import { OrdersModule } from './orders/orders.module';
+import { VouchersModule } from './vouchers/vouchers.module';
+import { OrderDetailModule } from './order-detail/order-detail.module';
 
 @Module({
   imports: [
@@ -58,6 +61,12 @@ import { CartModule } from './cart/cart.module';
     ProductsModule,
 
     CartModule,
+
+    OrdersModule,
+
+    VouchersModule,
+
+    OrderDetailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
