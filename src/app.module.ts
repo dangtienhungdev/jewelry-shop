@@ -18,6 +18,7 @@ import { CartModule } from './cart/cart.module';
 import { OrdersModule } from './orders/orders.module';
 import { VouchersModule } from './vouchers/vouchers.module';
 import { OrderDetailModule } from './order-detail/order-detail.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -67,6 +68,8 @@ import { OrderDetailModule } from './order-detail/order-detail.module';
     VouchersModule,
 
     OrderDetailModule,
+
+    ReviewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
