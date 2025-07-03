@@ -18,19 +18,19 @@ async function bootstrap() {
 
   // CORS
   app.enableCors({
-    origin: true,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: [
-      'Content-Type',
-      'Authorization',
-      'X-Requested-With',
-      'Accept',
-      'Origin',
-      'Access-Control-Allow-Origin',
-      'Access-Control-Allow-Headers',
-      'Access-Control-Allow-Methods',
-    ],
+    origin: '*',
+    // credentials: true,
+    // methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    // allowedHeaders: [
+    //   'Content-Type',
+    //   'Authorization',
+    //   'X-Requested-With',
+    //   'Accept',
+    //   'Origin',
+    //   'Access-Control-Allow-Origin',
+    //   'Access-Control-Allow-Headers',
+    //   'Access-Control-Allow-Methods',
+    // ],
   });
 
   // Global prefix
