@@ -512,7 +512,7 @@ export class ProductsService {
       weight: product.weight,
       material: product.material,
       stockQuantity: product.stockQuantity,
-      categoryId: product.categoryId.toString(),
+      categoryId: product?.categoryId?.toString() || '',
       category: product.categoryId
         ? {
             id:
