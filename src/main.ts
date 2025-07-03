@@ -75,7 +75,10 @@ async function bootstrap() {
     .setDescription('API Documentation')
     .setVersion('1.0')
     .addBearerAuth()
+    .addServer('http://103.216.119.111:8000', 'Development Server')
+    .addServer('https://api.jewelry-shop.com', 'Production Server')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
