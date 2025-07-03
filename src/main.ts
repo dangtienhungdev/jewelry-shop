@@ -1,10 +1,12 @@
-import { ValidationPipe } from '@nestjs/common';
+import * as compression from 'compression';
+
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as compression from 'compression';
+import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
-import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -47,41 +49,50 @@ async function bootstrap() {
   );
 
   // Swagger configuration
-  const swaggerConfig = configService.get('app.swagger');
+  // const swaggerConfig = configService.get('app.swagger');
+  // const config = new DocumentBuilder()
+  //   .setTitle(swaggerConfig.title)
+  //   .setDescription(swaggerConfig.description)
+  //   .setVersion(swaggerConfig.version)
+  //   .addTag(swaggerConfig.tag)
+  //   .addBearerAuth(
+  //     {
+  //       type: 'http',
+  //       scheme: 'bearer',
+  //       bearerFormat: 'JWT',
+  //       name: 'JWT',
+  //       description: 'Enter JWT token',
+  //       in: 'header',
+  //     },
+  //     'JWT-auth',
+  //   )
+  //   .addServer('http://localhost:8000', 'Development server')
+  //   .addServer('https://api.jewelry-shop.com', 'Production server')
+  //   .build();
+  // Cấu hình Swagger
   const config = new DocumentBuilder()
-    .setTitle(swaggerConfig.title)
-    .setDescription(swaggerConfig.description)
-    .setVersion(swaggerConfig.version)
-    .addTag(swaggerConfig.tag)
-    .addBearerAuth(
-      {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        name: 'JWT',
-        description: 'Enter JWT token',
-        in: 'header',
-      },
-      'JWT-auth',
-    )
-    .addServer('http://localhost:8000', 'Development server')
-    .addServer('https://api.jewelry-shop.com', 'Production server')
+    .setTitle('API')
+    .setDescription('API Documentation')
+    .setVersion('1.0')
+    .addBearerAuth()
     .build();
-
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document, {
-    swaggerOptions: {
-      persistAuthorization: true,
-      tagsSorter: 'alpha',
-      operationsSorter: 'alpha',
-    },
-    customSiteTitle: 'Jewelry Shop API Documentation',
-    customfavIcon: '/favicon.ico',
-    customCss: `
-      .swagger-ui .topbar { display: none }
-      .swagger-ui .info .title { color: #d4af37 }
-    `,
-  });
+  SwaggerModule.setup('api/docs', app, document);
+
+  // const document = SwaggerModule.createDocument(app, config);
+  // SwaggerModule.setup('api/docs', app, document, {
+  //   swaggerOptions: {
+  //     persistAuthorization: true,
+  //     tagsSorter: 'alpha',
+  //     operationsSorter: 'alpha',
+  //   },
+  //   customSiteTitle: 'Jewelry Shop API Documentation',
+  //   customfavIcon: '/favicon.ico',
+  //   customCss: `
+  //     .swagger-ui .topbar { display: none }
+  //     .swagger-ui .info .title { color: #d4af37 }
+  //   `,
+  // });
 
   const port = configService.get('app.port');
   await app.listen(port);
