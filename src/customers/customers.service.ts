@@ -313,7 +313,7 @@ export class CustomersService {
       await this.mailService.sendResetPasswordEmail(
         customer.email,
         resetToken,
-        customer.fullName,
+        customer?.fullName,
       );
 
       return {
@@ -377,7 +377,7 @@ export class CustomersService {
     try {
       await this.mailService.sendPasswordResetSuccessEmail(
         customer.email,
-        customer.fullName,
+        customer?.fullName,
       );
     } catch (error) {
       console.log('Không thể gửi email xác nhận:', error.message);
@@ -415,7 +415,7 @@ export class CustomersService {
   private toCustomerResponse(customer: CustomerDocument): CustomerResponseDto {
     return {
       _id: customer._id.toString(),
-      fullName: customer.fullName,
+      fullName: customer?.fullName,
       phone: customer.phone,
       email: customer.email,
       address: customer.address,
