@@ -462,7 +462,7 @@ export class ReviewsService {
       customer: review.customerId?.fullName
         ? {
             _id: review.customerId._id.toString(),
-            fullName: review.customerId.fullName,
+            fullName: review.customerId?.fullName,
           }
         : undefined,
       product: review.productId?.productName
