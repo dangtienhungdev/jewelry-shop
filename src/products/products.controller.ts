@@ -515,6 +515,60 @@ export class ProductsController {
     };
   }
 
+  @Get(':id/related')
+  @ApiOperation({
+    summary: 'Lấy danh sách sản phẩm liên quan trong cùng danh mục',
+  })
+  @ApiParam({ name: 'id', description: 'ID sản phẩm' })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Số lượng sản phẩm liên quan (mặc định: 8)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Lấy sản phẩm liên quan thành công',
+    schema: {
+      type: 'object',
+      properties: {
+        success: { type: 'boolean' },
+        message: { type: 'string' },
+        data: {
+          type: 'object',
+          properties: {
+            items: {
+              type: 'array',
+              items: { $ref: '#/components/schemas/ProductResponseDto' },
+            },
+            total: { type: 'number' },
+            limit: { type: 'number' },
+          },
+        },
+        timestamp: { type: 'string' },
+      },
+    },
+  })
+  @ApiResponse({ status: 400, description: 'ID sản phẩm không hợp lệ' })
+  @ApiResponse({ status: 404, description: 'Không tìm thấy sản phẩm' })
+  async getRelatedProducts(
+    @Param('id') id: string,
+    @Query('limit') limit?: number,
+  ) {
+    const products = await this.productsService.getRelatedProducts(id, limit);
+
+    return {
+      success: true,
+      message: 'Lấy sản phẩm liên quan thành công',
+      data: {
+        items: products,
+        total: products.length,
+        limit: limit || 8,
+      },
+      timestamp: new Date().toISOString(),
+    };
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Lấy thông tin chi tiết sản phẩm' })
   @ApiParam({ name: 'id', description: 'ID sản phẩm' })

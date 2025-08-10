@@ -86,6 +86,10 @@ export class CustomersService {
       loginCustomerDto.password,
       customer.password,
     );
+    console.log(
+      '🚀 ~ CustomersService ~ login ~ isPasswordValid:',
+      isPasswordValid,
+    );
 
     if (!isPasswordValid) {
       throw new UnauthorizedException('Email hoặc mật khẩu không đúng');

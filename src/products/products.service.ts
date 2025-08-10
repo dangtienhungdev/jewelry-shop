@@ -430,6 +430,38 @@ export class ProductsService {
   }
 
   /**
+   * Lấy sản phẩm liên quan trong cùng danh mục
+   */
+  async getRelatedProducts(
+    productId: string,
+    limit: number = 8,
+  ): Promise<ProductResponseDto[]> {
+    if (!Types.ObjectId.isValid(productId)) {
+      throw new BadRequestException('ID sản phẩm không hợp lệ');
+    }
+
+    // Lấy thông tin sản phẩm hiện tại để biết categoryId
+    const currentProduct = await this.productModel.findById(productId);
+    if (!currentProduct) {
+      throw new NotFoundException('Không tìm thấy sản phẩm');
+    }
+
+    // Tìm các sản phẩm khác trong cùng danh mục, loại trừ sản phẩm hiện tại
+    const relatedProducts = await this.productModel
+      .find({
+        categoryId: currentProduct.categoryId,
+        _id: { $ne: new Types.ObjectId(productId) }, // Loại trừ sản phẩm hiện tại
+        stockQuantity: { $gt: 0 }, // Chỉ lấy sản phẩm còn hàng
+      })
+      .populate('categoryId', 'categoryName description')
+      .sort({ views: -1, createdAt: -1 }) // Sắp xếp theo lượt xem và ngày tạo
+      .limit(limit)
+      .exec();
+
+    return relatedProducts.map((product) => this.mapToResponseDto(product));
+  }
+
+  /**
    * Lấy thống kê sản phẩm
    */
   async getProductStats(): Promise<{

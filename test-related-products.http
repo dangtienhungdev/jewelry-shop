@@ -1,0 +1,34 @@
+### Test Related Products API
+
+# Lấy sản phẩm liên quan (mặc định 8 sản phẩm)
+GET http://localhost:3000/products/{{productId}}/related
+Content-Type: application/json
+
+###
+
+# Lấy 6 sản phẩm liên quan
+GET http://localhost:3000/products/{{productId}}/related?limit=6
+Content-Type: application/json
+
+###
+
+# Lấy 4 sản phẩm liên quan
+GET http://localhost:3000/products/{{productId}}/related?limit=4
+Content-Type: application/json
+
+###
+
+# Test với ID không hợp lệ
+GET http://localhost:3000/products/invalid-id/related
+Content-Type: application/json
+
+###
+
+# Test với ID không tồn tại
+GET http://localhost:3000/products/507f1f77bcf86cd799439011/related
+Content-Type: application/json
+
+###
+
+# Variables (thay thế {{productId}} bằng ID thực tế)
+# productId=60d5f484e1a2f5001f647abc
