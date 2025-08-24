@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2024-01-15T10:00:00.000Z" agent="5.0" etag="abc123" version="22.1.16" type="device">
+  <diagram name="Jewelry Shop ERD" id="jewelry-shop-erd">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Admin Collection -->
+        <mxCell id="admin" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Collection: admins&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Quản lý tài khoản quản trị viên&lt;/i&gt;&lt;br&gt;&lt;br&gt;_id: ObjectId (PK)&lt;br&gt;username: String (unique, 3-50)&lt;br&gt;email: String (unique, email)&lt;br&gt;password: String (min 6, hashed)&lt;br&gt;role: String (SuperAdmin/Staff)&lt;br&gt;lastLogin: Date&lt;br&gt;createdAt: Date&lt;br&gt;updatedAt: Date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="160" height="180" as="geometry" />
+        </mxCell>
+
+        <!-- Customer Collection -->
+        <mxCell id="customer" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Collection: customers&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Quản lý thông tin khách hàng&lt;/i&gt;&lt;br&gt;&lt;br&gt;_id: ObjectId (PK)&lt;br&gt;fullName: String (2-100)&lt;br&gt;phone: String (unique, 10-11)&lt;br&gt;email: String (unique, email)&lt;br&gt;password: String (min 6, hashed)&lt;br&gt;address: String (max 500)&lt;br&gt;resetPasswordToken: String&lt;br&gt;resetPasswordExpires: Date&lt;br&gt;createdAt: Date&lt;br&gt;updatedAt: Date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="160" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- Category Collection -->
+        <mxCell id="category" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Collection: categories&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Quản lý danh mục sản phẩm (phân cấp)&lt;/i&gt;&lt;br&gt;&lt;br&gt;_id: ObjectId (PK)&lt;br&gt;categoryName: String (2-100)&lt;br&gt;description: String (max 500)&lt;br&gt;parentId: ObjectId (ref: self)&lt;br&gt;isActive: Boolean&lt;br&gt;createdAt: Date&lt;br&gt;updatedAt: Date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="480" width="160" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- Product Collection -->
+        <mxCell id="product" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Collection: products&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Quản lý thông tin sản phẩm&lt;/i&gt;&lt;br&gt;&lt;br&gt;_id: ObjectId (PK)&lt;br&gt;productName: String (3-200)&lt;br&gt;description: String (max 2000)&lt;br&gt;price: Number (VNĐ)&lt;br&gt;discountedPrice: Number&lt;br&gt;weight: Number (grams)&lt;br&gt;material: String (enum)&lt;br&gt;stockQuantity: Number&lt;br&gt;categoryId: ObjectId (ref: Category)&lt;br&gt;createdBy: ObjectId (ref: Admin)&lt;br&gt;isFeatured: Boolean&lt;br&gt;views: Number&lt;br&gt;discounts: Array&lt;br&gt;images: Array&lt;br&gt;createdAt: Date&lt;br&gt;updatedAt: Date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="160" height="220" as="geometry" />
+        </mxCell>
+
+        <!-- Cart Collection -->
+        <mxCell id="cart" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Collection: carts&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Quản lý giỏ hàng khách hàng&lt;/i&gt;&lt;br&gt;&lt;br&gt;_id: ObjectId (PK)&lt;br&gt;customerId: String (ref: Customer)&lt;br&gt;items: Array&lt;br&gt;  - productId: ObjectId&lt;br&gt;  - quantity: Number&lt;br&gt;  - price: Number&lt;br&gt;  - discountedPrice: Number&lt;br&gt;  - addedAt: Date&lt;br&gt;totalAmount: Number&lt;br&gt;totalItems: Number&lt;br&gt;createdAt: Date&lt;br&gt;updatedAt: Date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="300" width="160" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- Order Collection -->
+        <mxCell id="order" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Collection: orders&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Quản lý đơn hàng&lt;/i&gt;&lt;br&gt;&lt;br&gt;_id: ObjectId (PK)&lt;br&gt;customerId: ObjectId (ref: Customer)&lt;br&gt;orderDate: Date&lt;br&gt;totalAmount: Number&lt;br&gt;discountAmount: Number&lt;br&gt;finalAmount: Number&lt;br&gt;status: String (enum)&lt;br&gt;shippingAddress: String&lt;br&gt;processedBy: ObjectId (ref: Admin)&lt;br&gt;notes: String&lt;br&gt;orderDetails: Array&lt;br&gt;appliedDiscounts: Array&lt;br&gt;orderCode: String&lt;br&gt;recipientName: String&lt;br&gt;recipientPhone: String&lt;br&gt;shippingFee: Number&lt;br&gt;createdAt: Date&lt;br&gt;updatedAt: Date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="440" y="40" width="160" height="240" as="geometry" />
+        </mxCell>
+
+        <!-- Payment Collection -->
+        <mxCell id="payment" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Collection: payments&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Quản lý thanh toán&lt;/i&gt;&lt;br&gt;&lt;br&gt;_id: ObjectId (PK)&lt;br&gt;orderId: ObjectId (ref: Order)&lt;br&gt;paymentMethod: String (enum)&lt;br&gt;paymentDate: Date&lt;br&gt;amount: Number&lt;br&gt;transactionCode: String&lt;br&gt;status: String (enum)&lt;br&gt;verifiedBy: ObjectId (ref: Admin)&lt;br&gt;payosOrderId: Number&lt;br&gt;payosPaymentLinkId: String&lt;br&gt;notes: String&lt;br&gt;createdAt: Date&lt;br&gt;updatedAt: Date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="440" y="320" width="160" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- Review Collection -->
+        <mxCell id="review" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Collection: reviews&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Quản lý đánh giá sản phẩm&lt;/i&gt;&lt;br&gt;&lt;br&gt;_id: ObjectId (PK)&lt;br&gt;productId: ObjectId (ref: Product)&lt;br&gt;customerId: ObjectId (ref: User)&lt;br&gt;orderId: ObjectId (ref: Order)&lt;br&gt;rating: Number (1-5)&lt;br&gt;title: String (max 200)&lt;br&gt;comment: String (max 1000)&lt;br&gt;reviewDate: Date&lt;br&gt;isApproved: Boolean&lt;br&gt;approvedBy: ObjectId (ref: Admin)&lt;br&gt;approvedAt: Date&lt;br&gt;response: String&lt;br&gt;responseDate: Date&lt;br&gt;helpfulCount: Number&lt;br&gt;isVerifiedPurchase: Boolean&lt;br&gt;images: Array" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="40" width="160" height="220" as="geometry" />
+        </mxCell>
+
+        <!-- Voucher Collection -->
+        <mxCell id="voucher" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Collection: vouchers&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Quản lý mã giảm giá&lt;/i&gt;&lt;br&gt;&lt;br&gt;_id: ObjectId (PK)&lt;br&gt;discountCode: String (unique)&lt;br&gt;discountName: String&lt;br&gt;discountType: String (enum)&lt;br&gt;discountValue: Number&lt;br&gt;startDate: Date&lt;br&gt;endDate: Date&lt;br&gt;minOrderValue: Number&lt;br&gt;maxDiscountAmount: Number&lt;br&gt;usageLimit: Number&lt;br&gt;usedCount: Number&lt;br&gt;isActive: Boolean&lt;br&gt;createdBy: ObjectId (ref: Admin)&lt;br&gt;description: String&lt;br&gt;createdAt: Date&lt;br&gt;updatedAt: Date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="300" width="160" height="200" as="geometry" />
+        </mxCell>
+
+                <!-- Relationships -->
+        <!-- Admin to Product -->
+        <mxCell id="admin-product" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Admin tạo sản phẩm&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="admin" target="product">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin to Voucher -->
+        <mxCell id="admin-voucher" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Admin tạo voucher&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="admin" target="voucher">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin to Order -->
+        <mxCell id="admin-order" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Admin xử lý đơn hàng&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="admin" target="order">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin to Payment -->
+        <mxCell id="admin-payment" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Admin xác nhận thanh toán&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="admin" target="payment">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin to Review -->
+        <mxCell id="admin-review" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Admin duyệt đánh giá&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="admin" target="review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Customer to Cart -->
+        <mxCell id="customer-cart" value="&lt;font size=&quot;12&quot;&gt;1:1&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Mỗi khách hàng có 1 giỏ hàng&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="customer" target="cart">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Customer to Order -->
+        <mxCell id="customer-order" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Khách hàng có thể đặt nhiều đơn hàng&lt;/font&gt;" style="edgeStyle=orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="customer" target="order">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Customer to Review -->
+        <mxCell id="customer-review" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Khách hàng có thể viết nhiều đánh giá&lt;/font&gt;" style="edgeStyle=orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="customer" target="review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Category to Product -->
+        <mxCell id="category-product" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Mỗi danh mục có nhiều sản phẩm&lt;/font&gt;" style="edgeStyle=orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="category" target="product">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Product to Review -->
+        <mxCell id="product-review" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Mỗi sản phẩm có thể có nhiều đánh giá&lt;/font&gt;" style="edgeStyle=orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="product" target="review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Cart to Product (through items array) -->
+        <mxCell id="cart-product" value="&lt;font size=&quot;12&quot;&gt;N:M&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Giỏ hàng chứa nhiều sản phẩm&lt;/font&gt;" style="edgeStyle=orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="cart" target="product">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Order to Payment -->
+        <mxCell id="order-payment" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Mỗi đơn hàng có thể có nhiều thanh toán&lt;/font&gt;" style="edgeStyle=orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="order" target="payment">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Order to Product (through orderDetails array) -->
+        <mxCell id="order-product" value="&lt;font size=&quot;12&quot;&gt;N:M&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Đơn hàng chứa nhiều sản phẩm&lt;/font&gt;" style="edgeStyle=orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="order" target="product">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Order to Voucher (through appliedDiscounts array) -->
+        <mxCell id="order-voucher" value="&lt;font size=&quot;12&quot;&gt;N:M&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Đơn hàng có thể áp dụng nhiều voucher&lt;/font&gt;" style="edgeStyle=orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="order" target="voucher">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Category self-reference (hierarchical) -->
+        <mxCell id="category-self" value="&lt;font size=&quot;12&quot;&gt;1:N&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;9&quot;&gt;Danh mục cha - con&lt;/font&gt;" style="edgeStyle=orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;" edge="1" parent="1" source="category" target="category">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="120" y="550" />
+              <mxPoint x="120" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Legend:&lt;/b&gt;&lt;br&gt;1:1 = One-to-One&lt;br&gt;1:N = One-to-Many&lt;br&gt;N:M = Many-to-Many&lt;br&gt;&lt;br&gt;&lt;b&gt;Colors:&lt;/b&gt;&lt;br&gt;Blue = Admin&lt;br&gt;Green = Customer/Review&lt;br&gt;Yellow = Category/Voucher&lt;br&gt;Red = Product&lt;br&gt;Purple = Cart&lt;br&gt;Orange = Order&lt;br&gt;Gray = Payment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#dee2e6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="840" y="40" width="200" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- Database Flow Explanation -->
+        <mxCell id="flow-explanation" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Luồng chạy chính trong Database:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;1. Quản lý sản phẩm:&lt;/b&gt;&lt;br&gt;Admin tạo sản phẩm → Phân loại vào Category → Khách hàng xem và mua&lt;br&gt;&lt;br&gt;&lt;b&gt;2. Quy trình mua hàng:&lt;/b&gt;&lt;br&gt;Customer → Cart (thêm sản phẩm) → Order → Payment&lt;br&gt;&lt;br&gt;&lt;b&gt;3. Hệ thống giảm giá:&lt;/b&gt;&lt;br&gt;Admin tạo Voucher → Áp dụng vào Order → Giảm giá cho khách hàng&lt;br&gt;&lt;br&gt;&lt;b&gt;4. Đánh giá sản phẩm:&lt;/b&gt;&lt;br&gt;Customer mua hàng → Viết Review → Admin duyệt → Hiển thị công khai&lt;br&gt;&lt;br&gt;&lt;b&gt;5. Quản lý đơn hàng:&lt;/b&gt;&lt;br&gt;Order → OrderDetails (sản phẩm) → Payment → Admin xử lý" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f4fd;strokeColor=#0d6efd;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="840" y="260" width="200" height="280" as="geometry" />
+        </mxCell>
+
+        <!-- Business Logic Notes -->
+        <mxCell id="business-notes" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Ghi chú Business Logic:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;• Timestamps:&lt;/b&gt; Tất cả collections đều có createdAt, updatedAt&lt;br&gt;&lt;br&gt;&lt;b&gt;• Validation:&lt;/b&gt; Email, phone unique, password hash, enum values&lt;br&gt;&lt;br&gt;&lt;b&gt;• Auto-calculation:&lt;/b&gt; Cart totals, Order amounts, Review counts&lt;br&gt;&lt;br&gt;&lt;b&gt;• Status Management:&lt;/b&gt; Order status, Payment status, Review approval&lt;br&gt;&lt;br&gt;&lt;b&gt;• Security:&lt;/b&gt; Admin roles, Customer authentication, Payment verification&lt;br&gt;&lt;br&gt;&lt;b&gt;• Performance:&lt;/b&gt; Text search, Compound indexes, Virtual fields" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#ffc107;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="840" y="560" width="200" height="200" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2024-01-15T10:00:00.000Z" agent="5.0" etag="abc123" version="22.1.16" type="device">
+  <diagram name="Jewelry Shop Use Case" id="jewelry-shop-use-case">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- System Boundary -->
+        <mxCell id="system" value="&lt;b style=&quot;font-size: 16px;&quot;&gt;Jewelry Shop System&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#dee2e6;strokeWidth=3;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="200" y="100" width="1200" height="1000" as="geometry" />
+        </mxCell>
+
+        <!-- Actors - Left Side -->
+        <!-- Guest User -->
+        <mxCell id="guest" value="&lt;b&gt;Guest User&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;(Khách vãng lai)&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="50" y="300" width="30" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Customer -->
+        <mxCell id="customer" value="&lt;b&gt;Customer&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;(Khách hàng)&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="50" y="600" width="30" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Admin -->
+        <mxCell id="admin" value="&lt;b&gt;Admin&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;(Quản trị viên)&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="50" y="900" width="30" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- External Systems - Right Side -->
+        <!-- Payment Gateway -->
+        <mxCell id="payment" value="&lt;b&gt;Payment Gateway&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;(PayOS)&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=12;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="400" width="30" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Email Service -->
+        <mxCell id="email" value="&lt;b&gt;Email Service&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;(Gửi email)&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=12;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="700" width="30" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Use Cases - Guest User (Column 1) -->
+        <mxCell id="browse-products" value="&lt;b&gt;Browse Products&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Xem danh sách sản phẩm&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="150" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="view-product-detail" value="&lt;b&gt;View Product Detail&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Xem chi tiết sản phẩm&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="search-products" value="&lt;b&gt;Search Products&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Tìm kiếm sản phẩm&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="view-categories" value="&lt;b&gt;View Categories&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Xem danh mục&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Use Cases - Customer (Column 2) -->
+        <mxCell id="register" value="&lt;b&gt;Register Account&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Đăng ký tài khoản&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="150" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="login" value="&lt;b&gt;Login&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Đăng nhập&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="manage-profile" value="&lt;b&gt;Manage Profile&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Quản lý hồ sơ&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="add-to-cart" value="&lt;b&gt;Add to Cart&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Thêm vào giỏ hàng&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="manage-cart" value="&lt;b&gt;Manage Cart&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Quản lý giỏ hàng&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="550" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="place-order" value="&lt;b&gt;Place Order&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Đặt hàng&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="650" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="view-orders" value="&lt;b&gt;View Orders&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Xem đơn hàng&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="750" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="write-review" value="&lt;b&gt;Write Review&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Viết đánh giá&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="850" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="apply-voucher" value="&lt;b&gt;Apply Voucher&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Áp dụng mã giảm giá&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="950" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="reset-password" value="&lt;b&gt;Reset Password&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Đặt lại mật khẩu&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1050" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Use Cases - Admin (Column 3) -->
+        <mxCell id="manage-products" value="&lt;b&gt;Manage Products&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Quản lý sản phẩm&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="150" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="process-orders" value="&lt;b&gt;Process Orders&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Xử lý đơn hàng&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="manage-categories" value="&lt;b&gt;Manage Categories&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Quản lý danh mục&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="approve-reviews" value="&lt;b&gt;Approve Reviews&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Duyệt đánh giá&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="manage-vouchers" value="&lt;b&gt;Manage Vouchers&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Quản lý mã giảm giá&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="550" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="verify-payments" value="&lt;b&gt;Verify Payments&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Xác nhận thanh toán&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="650" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="manage-customers" value="&lt;b&gt;Manage Customers&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Quản lý khách hàng&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="750" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="view-reports" value="&lt;b&gt;View Reports&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Xem báo cáo&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="850" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="system-config" value="&lt;b&gt;System Config&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Cấu hình hệ thống&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="950" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Use Cases - External Systems (Column 4) -->
+        <mxCell id="process-payment" value="&lt;b&gt;Process Payment&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Xử lý thanh toán&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="send-notifications" value="&lt;b&gt;Send Notifications&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Gửi thông báo&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="550" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships - Guest User (Curved) -->
+        <mxCell id="guest-browse" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="guest" target="browse-products">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="guest-view" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="guest" target="view-product-detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="guest-search" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="guest" target="search-products">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="guest-categories" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="guest" target="view-categories">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships - Customer (Curved) -->
+        <mxCell id="customer-register" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="register">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-profile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="manage-profile">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-cart" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="add-to-cart">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-manage-cart" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="manage-cart">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-order" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="place-order">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-view-orders" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="view-orders">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="write-review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-voucher" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="apply-voucher">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-reset" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="customer" target="reset-password">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships - Admin (Curved) -->
+        <mxCell id="admin-products" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="admin" target="manage-products">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-orders" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="admin" target="process-orders">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-categories" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="admin" target="manage-categories">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-reviews" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="admin" target="approve-reviews">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-vouchers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="admin" target="manage-vouchers">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-payments" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="admin" target="verify-payments">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-customers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="admin" target="manage-customers">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-reports" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="admin" target="view-reports">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-config" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="admin" target="system-config">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships - External Systems (Curved) -->
+        <mxCell id="payment-gateway" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="payment" target="process-payment">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="email-service" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="email" target="send-notifications">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Include Relationships (Curved) -->
+        <mxCell id="include1" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;" edge="1" parent="1" source="place-order" target="process-payment">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="include2" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;" edge="1" parent="1" source="place-order" target="send-notifications">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="include3" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;" edge="1" parent="1" source="write-review" target="approve-reviews">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Extend Relationships (Curved) -->
+        <mxCell id="extend1" value="&lt;&lt;extend&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;" edge="1" parent="1" source="apply-voucher" target="place-order">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Use Case Legend:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Actors:&lt;/b&gt;&lt;br&gt;• Guest User: Khách vãng lai&lt;br&gt;• Customer: Khách hàng đã đăng ký&lt;br&gt;• Admin: Quản trị viên&lt;br&gt;• External Systems: Hệ thống bên ngoài&lt;br&gt;&lt;br&gt;&lt;b&gt;Relationships:&lt;/b&gt;&lt;br&gt;• Solid curved line: Association&lt;br&gt;• Dashed curved line: Include/Extend&lt;br&gt;&lt;br&gt;&lt;b&gt;Colors:&lt;/b&gt;&lt;br&gt;• Purple: Guest functions&lt;br&gt;• Green: Customer functions&lt;br&gt;• Blue: Admin functions&lt;br&gt;• Orange: Payment functions&lt;br&gt;• Red: Email functions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#dee2e6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1120" width="400" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- Business Rules -->
+        <mxCell id="business-rules" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Business Rules:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;1. Authentication:&lt;/b&gt;&lt;br&gt;• Guest users can only browse&lt;br&gt;• Customers must login to purchase&lt;br&gt;• Admin need proper roles&lt;br&gt;&lt;br&gt;&lt;b&gt;2. Order Processing:&lt;/b&gt;&lt;br&gt;• Orders require payment verification&lt;br&gt;• Vouchers must be valid and applicable&lt;br&gt;• Reviews require order completion&lt;br&gt;&lt;br&gt;&lt;b&gt;3. Security:&lt;/b&gt;&lt;br&gt;• Admin functions are role-based&lt;br&gt;• Customer data is protected&lt;br&gt;• Payment information is encrypted" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f4fd;strokeColor=#0d6efd;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="620" y="1120" width="400" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- System Features -->
+        <mxCell id="system-features" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;System Features:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;1. Product Management:&lt;/b&gt;&lt;br&gt;• Browse, search, filter products&lt;br&gt;• Category-based organization&lt;br&gt;• Product details and images&lt;br&gt;&lt;br&gt;&lt;b&gt;2. Order Management:&lt;/b&gt;&lt;br&gt;• Shopping cart functionality&lt;br&gt;• Order placement and tracking&lt;br&gt;• Payment processing&lt;br&gt;&lt;br&gt;&lt;b&gt;3. User Management:&lt;/b&gt;&lt;br&gt;• Customer registration/login&lt;br&gt;• Profile management&lt;br&gt;• Admin role management&lt;br&gt;&lt;br&gt;&lt;b&gt;4. Review System:&lt;/b&gt;&lt;br&gt;• Customer reviews and ratings&lt;br&gt;• Admin approval workflow&lt;br&gt;• Verified purchase badges" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#ffc107;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="1120" width="400" height="200" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
